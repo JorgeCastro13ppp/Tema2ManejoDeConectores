@@ -12,24 +12,28 @@ public class CargarZapatosJSON {
 
     public static void main(String[] args) {
 
+        // 1️ Ejecutar el script SQL (OBLIGATORIO POR ENUNCIADO)
+        EjecutarScriptZapatos.ejecutarScript();
+        
+        EjecutarScriptZapatos.crearFuncionTotal();
+        
+        System.out.println("Script ejecutado correctamente.");
+
         String sql = """
             INSERT INTO zapato (marca, modelo, tamano, color, stock, precio)
             VALUES (?, ?, ?, ?, ?, ?)
         """;
 
         try (
-            // 1️⃣ Abrir conexión
             Connection con = ConexionZapatos.conectar();
-
-            // 2️⃣ Preparar la sentencia
             PreparedStatement ps = con.prepareStatement(sql)
         ) {
-            // 3️⃣ Leer el JSON
+            // 2️ Leer el JSON
             String contenido = Files.readString(Path.of("zapatos.json"));
             JSONObject obj = new JSONObject(contenido);
             JSONArray zapatos = obj.getJSONArray("zapatos");
 
-            // 4️⃣ Recorrer el array
+            // 3️ Recorrer el array
             for (int i = 0; i < zapatos.length(); i++) {
 
                 JSONObject z = zapatos.getJSONObject(i);
@@ -44,8 +48,7 @@ public class CargarZapatosJSON {
                 ps.addBatch();
             }
 
-
-            // 6️⃣ Ejecutar todos los inserts
+            // 4️ Ejecutar batch
             ps.executeBatch();
 
             System.out.println("Zapatos insertados correctamente en la BD");

@@ -18,7 +18,7 @@ public class MenuZapatos {
 
         do {
             System.out.println("\n--- MENÚ BD ZAPATOS ---");
-            System.out.println("1. Mostrar zapatos con stock < 5");
+            System.out.println("1. Mostrar zapatos con stock < 10");
             System.out.println("2. Subir 2€ a los zapatos Nike");
             System.out.println("3. Añadir campo descripcion");
             System.out.println("4. Zapatos rojos con stock < 20");
